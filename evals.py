@@ -55,19 +55,23 @@ if __name__ == "__main__":
 
     print("Calculating rewards...")
     rewards = [compute_reward(sample, CHAR_COUNT_MIN, CHAR_COUNT_MAX) for sample in samples]
-
-    variance = np.var(rewards)
+    
+    # Calculate statistics
     mean_reward = np.mean(rewards)
+    reward_variance = np.var(rewards)
+    reward_std = np.std(rewards)
 
     print(f"\nSummary:")
     print(f"  Prompt: {PROMPT}")
     print(f"  Model: {MODEL}")
     print(f"  Samples: {N_SAMPLES}")
     print(f"  Mean reward: {mean_reward:.4f}")
-    print(f"  Reward variance: {variance:.4f}")
+    print(f"  Reward variance: {reward_variance:.4f}")
+    print(f"  Reward std dev: {reward_std:.4f}")
+    print(f"  Reward vector: {[f'{r:.4f}' for r in rewards]}")
 
     for i, (text, score) in enumerate(zip(samples[:3], rewards[:3])):
         print(f"\n--- Sample {i+1} ---")
-        print(f"Reward: {score}")
+        print(f"Reward: {score:.4f}")
         print(f"Character count: {len(text)}")
         print(text.strip())
